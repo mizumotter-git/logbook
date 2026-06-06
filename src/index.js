@@ -1,7 +1,8 @@
 // Logbook — Cloudflare Worker (API)
 // ----------------------------------
-//  GET  /api/projects : list all projects (token required)
-//  POST /api/status   : upsert by project name (token required; updatedAt is set automatically)
+//  GET    /api/projects      : list all projects (token required)
+//  POST   /api/status        : upsert by project name (token required; updatedAt is set automatically)
+//  DELETE /api/projects/:id  : delete a project by id (token required)
 //  Other paths are served by the static asset (public/index.html).
 //
 //  Fields per project: status (enum), summary (current state), next (next step), repo (optional)
@@ -15,6 +16,8 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/projects" && request.method === "GET") return handleList(request, env);
     if (url.pathname === "/api/status" && request.method === "POST") return handleUpsert(request, env);
+    const delMatch = url.pathname.match(/^\/api\/projects\/([^/]+)$/);
+    if (delMatch && request.method === "DELETE") return handleDelete(request, env, decodeURIComponent(delMatch[1]));
     if (url.pathname.startsWith("/api/")) return json({ error: "not found" }, 404);
     return new Response("Not found", { status: 404 }); // non-API handled by static assets
   }
@@ -82,6 +85,19 @@ async function handleUpsert(request, env) {
 
   await writeProjects(env, projects);
   return json({ ok: true, project: p });
+}
+
+async function handleDelete(request, env, id) {
+  if (!authed(request, env)) return json({ error: "unauthorized" }, 401);
+  if (!id) return json({ error: "id is required" }, 400);
+
+  const projects = await readProjects(env);
+  const idx = projects.findIndex(function (x) { return x.id === id; });
+  if (idx === -1) return json({ error: "project not found" }, 404);
+
+  const removed = projects.splice(idx, 1)[0];
+  await writeProjects(env, projects);
+  return json({ ok: true, deleted: removed });
 }
 
 function json(obj, status) {

@@ -72,6 +72,10 @@
   .dlabel:first-child{margin-top:0}
   .dtext{white-space:pre-wrap;font-size:13px;line-height:1.6;color:var(--text)}
   .dtext.empty{color:var(--faint);font-style:italic}
+  .actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .action{font-family:var(--mono);font-size:11px;letter-spacing:.5px;text-transform:uppercase;padding:6px 11px;border-radius:7px;border:1px solid var(--line);background:var(--bg-soft);color:var(--muted);cursor:pointer}
+  .action:hover{color:var(--ember);border-color:var(--ember)}
+  .action.danger:hover{color:var(--st-stalled);border-color:var(--st-stalled)}
   .pfoot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px}
   .pfoot.stale{color:var(--st-stalled)}
 
@@ -89,6 +93,10 @@
   input:focus,select:focus,textarea:focus{border-color:var(--ember);box-shadow:0 0 0 3px rgba(255,122,47,.12)}
   .btn{margin-top:12px;background:var(--ember);color:var(--btn-text);border:0;font-family:var(--sans);font-weight:600;font-size:14px;padding:11px 16px;border-radius:10px;cursor:pointer}
   .btn:hover{filter:brightness(1.07)} .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);margin-left:8px}
+  .btn.ghost:hover{color:var(--ember);border-color:var(--ember);filter:none}
+  .panel h3 .editing-tag{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--ember);font-weight:500}
+  input[readonly]{background:var(--bg-soft);color:var(--muted);cursor:not-allowed}
 
   .blank{text-align:center;color:var(--faint);padding:30px 10px;font-size:14px;line-height:1.7}
   .blank .big{font-size:30px;margin-bottom:6px}
@@ -140,7 +148,7 @@
     <section>
       <p class="sec-title">Manual update</p>
       <div class="panel">
-        <h3>Add or update a project</h3>
+        <h3 id="panel-title">Add or update a project<span id="editing-tag" class="editing-tag hidden"></span></h3>
         <div class="field-row">
           <div class="field"><label>Project</label><input id="f-name" placeholder="e.g. my-app"></div>
           <div class="field sm"><label>Status</label>
@@ -156,6 +164,7 @@
           <div class="field full"><label>Repo URL (optional)</label><input id="f-repo" type="url" placeholder="https://github.com/..."></div>
         </div>
         <button class="btn" id="f-save">Save</button>
+        <button type="button" class="btn ghost hidden" id="f-cancel">Cancel</button>
         <div class="err" id="form-err" style="color:var(--st-stalled);font-size:12px;margin-top:8px"></div>
       </div>
     </section>
@@ -171,6 +180,8 @@
   var TOKEN_KEY = "logbook-token";
   var THEME_KEY = "logbook-theme";
   var openIds = {}; // ids of expanded cards (kept across re-renders)
+  var currentProjects = []; // latest list cached for the edit flow
+  var editingId = null;     // id of the project currently being edited (null = create mode)
 
   // ----- theme -----
   var theme = localStorage.getItem(THEME_KEY) || "dark";
@@ -242,6 +253,7 @@
   }
 
   function render(projects){
+    currentProjects = projects;
     // summary (the temperature)
     var counts = { active:0, stalled:0, done:0, frozen:0 };
     projects.forEach(function(p){ if(counts[p.status] === undefined) counts[p.status]=0; counts[p.status]++; });
@@ -275,6 +287,10 @@
         '<div class="detail">'
         + '<div class="dlabel">Current state</div><div class="dtext'+(p.summary?'':' empty')+'">'+(p.summary?esc(p.summary):"\u2014")+'</div>'
         + '<div class="dlabel">Next step</div><div class="dtext'+(p.next?'':' empty')+'">'+(p.next?esc(p.next):"\u2014")+'</div>'
+        + '<div class="actions">'
+        +   '<button type="button" class="action" data-action="edit">Edit</button>'
+        +   '<button type="button" class="action danger" data-action="delete">Delete</button>'
+        + '</div>'
         + '</div>';
       return ''
         + '<div class="pcard s-'+esc(p.status)+open+'" data-id="'+esc(p.id)+'">'
@@ -287,9 +303,27 @@
     }).join("");
   }
 
-  // expand/collapse a card (ignore clicks on the repo link)
+  // expand/collapse a card (ignore clicks on the repo link or action buttons)
   $("board").addEventListener("click", function(e){
     if(e.target.closest("a")) return;
+
+    // Edit / Delete action buttons take precedence over expand toggle
+    var actionBtn = e.target.closest(".action");
+    if(actionBtn){
+      e.stopPropagation();
+      var actionCard = actionBtn.closest(".pcard");
+      if(!actionCard) return;
+      var actionId = actionCard.getAttribute("data-id");
+      var action = actionBtn.getAttribute("data-action");
+      if(action === "edit"){ startEdit(actionId); }
+      else if(action === "delete"){
+        var nameEl = actionCard.querySelector(".pname");
+        var name = nameEl ? nameEl.textContent.trim() : actionId;
+        deleteProject(actionId, name);
+      }
+      return;
+    }
+
     var card = e.target.closest(".pcard");
     if(!card) return;
     var id = card.getAttribute("data-id");
@@ -297,6 +331,61 @@
     if(openIds[id]){ delete openIds[id]; card.classList.remove("open"); }
     else { openIds[id] = true; card.classList.add("open"); }
   });
+
+  // ----- edit / delete helpers -----
+  function startEdit(id){
+    var p = currentProjects.find(function(x){ return x.id === id; });
+    if(!p) return;
+    editingId = id;
+    $("f-name").value = p.name;
+    $("f-name").readOnly = true;
+    $("f-status").value = p.status || "active";
+    $("f-summary").value = p.summary || "";
+    $("f-next").value = p.next || "";
+    $("f-repo").value = p.repo || "";
+    $("f-save").textContent = "Update";
+    $("f-cancel").classList.remove("hidden");
+    $("editing-tag").textContent = "editing: " + p.name;
+    $("editing-tag").classList.remove("hidden");
+    $("form-err").textContent = "";
+    var panel = document.querySelector(".panel");
+    if(panel && panel.scrollIntoView) panel.scrollIntoView({behavior:"smooth", block:"start"});
+    setTimeout(function(){ $("f-summary").focus(); }, 250);
+  }
+
+  function exitEdit(){
+    editingId = null;
+    $("f-name").value = "";
+    $("f-name").readOnly = false;
+    $("f-status").value = "active";
+    $("f-summary").value = "";
+    $("f-next").value = "";
+    $("f-repo").value = "";
+    $("f-save").textContent = "Save";
+    $("f-cancel").classList.add("hidden");
+    $("editing-tag").textContent = "";
+    $("editing-tag").classList.add("hidden");
+    $("form-err").textContent = "";
+  }
+
+  function deleteProject(id, name){
+    if(!confirm('Delete "' + name + '"?\n\nThis cannot be undone.')) return;
+    api("/api/projects/" + encodeURIComponent(id), { method:"DELETE" })
+      .then(function(res){
+        if(res.status === 401){ clearToken(); showGate("Token rejected."); return null; }
+        if(!res.ok){ return res.json().then(function(j){ throw new Error(j.error || ("HTTP " + res.status)); }); }
+        return res.json();
+      })
+      .then(function(j){
+        if(!j) return;
+        delete openIds[id];
+        if(editingId === id) exitEdit();
+        load();
+      })
+      .catch(function(e){ alert("Delete failed: " + e.message); });
+  }
+
+  $("f-cancel").onclick = exitEdit;
 
   function renderAgentHelp(){
     var origin = location.origin;
@@ -340,7 +429,7 @@
       return res.json();
     }).then(function(j){
       if(!j) return;
-      $("f-name").value=""; $("f-summary").value=""; $("f-next").value=""; $("f-repo").value="";
+      exitEdit();
       load();
     }).catch(function(e){ $("form-err").textContent = e.message; });
   };

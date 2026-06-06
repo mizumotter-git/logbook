@@ -23,6 +23,7 @@ One Cloudflare Worker serves the board UI **and** a small API. Data lives in Wor
 
 - **At-a-glance board** — every project as a card, grouped and colored by status, with a summary count up top.
 - **Status + prose** — a quick status (`active` / `stalled` / `done` / `frozen`) for the glance, plus free-text **current state** and **next step** (multiple lines welcome). Tap a card to expand the full notes.
+- **Edit & delete from the board** — every card has Edit / Delete buttons in the expanded view. Edit loads the project into the form (project name is locked to prevent accidental duplicates); Delete asks for confirmation.
 - **Agent-updatable** — a clean `POST /api/status` endpoint so your coding agent can keep the board current. No browser automation, no scraping.
 - **Stale detection** — `active` projects untouched for a while are flagged automatically (the timestamp is set server-side, so it can't drift).
 - **Cross-device** — server-side storage; open it anywhere with your token.
@@ -36,6 +37,7 @@ All endpoints require a header: `Authorization: Bearer <token>`.
 |---|---|
 | `GET /api/projects` | Returns `{ "projects": [ ... ] }`. |
 | `POST /api/status` | Upserts a project **by name**, merging only the fields you send. `updatedAt` is set automatically. |
+| `DELETE /api/projects/:id` | Deletes a project by its `id`. Returns `{ "ok": true, "deleted": { ... } }`. |
 
 `POST /api/status` body (`project` is the only required field):
 
