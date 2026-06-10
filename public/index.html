@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%9A%80</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Roboto+Slab:wght@400;500;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     /* ----- dark (default): deep space ----- */
@@ -396,6 +396,8 @@
   .ticker{display:none}
   /* mountain silhouette (summit theme only) */
   .ridge{display:none}
+  /* resident cat (neko theme only) */
+  .neko{display:none}
 
   /* ===== theme: abyss — deep-sea bioluminescence ===== */
   :root[data-theme="abyss"]{
@@ -636,6 +638,93 @@
     -webkit-text-fill-color:#14120e;color:#14120e}
   @keyframes tickermove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+  /* ===== theme: neko — a sunlit room with a resident black cat ===== */
+  :root[data-theme="neko"]{
+    --bg:#f7efe2; --bg-2:#f1e5d0; --bg-soft:rgba(255,251,243,.72);
+    --card:#fffaf2; --card-hi:#fffdf8;
+    --line:rgba(94,72,50,.16); --line-strong:rgba(94,72,50,.36); --line-soft:rgba(94,72,50,.09);
+    --text:#3a2e24; --muted:#7c6a58; --faint:#a89783;
+    --neon-cyan:#c77b2a; --neon-magenta:#d4604f; --neon-violet:#9a7fc9; --neon-blue:#5b8fc9;
+    --st-active:#5fae6e; --st-stalled:#e07a4f; --st-done:#9a7fc9; --st-frozen:#a39a8d;
+    --btn-text:#fff;
+    --glow-cyan:0 3px 14px rgba(199,123,42,.28);
+    --glow-magenta:0 3px 14px rgba(212,96,79,.28);
+    --glow-violet:0 3px 14px rgba(154,127,201,.28);
+    --glow-soft:0 8px 24px rgba(94,72,50,.09), inset 0 0 0 1px rgba(255,255,255,.6);
+    --aurora-1:rgba(255,205,130,.45); --aurora-2:rgba(255,170,95,.30); --aurora-3:rgba(255,240,210,.60);
+    --display:'Quicksand',var(--sans);
+  }
+  [data-theme="neko"] body{background:linear-gradient(180deg,var(--bg),var(--bg-2));background-attachment:fixed}
+  [data-theme="neko"] .stars,[data-theme="neko"] .grid,[data-theme="neko"] .scan,
+  [data-theme="neko"] .heartbeat,[data-theme="neko"] .pulse-ring,[data-theme="neko"] .boot{display:none}
+  [data-theme="neko"] .aurora{mix-blend-mode:normal;filter:blur(100px) saturate(1)}
+  [data-theme="neko"] .aurora.a1{animation:nebula1 34s ease-in-out infinite}
+  [data-theme="neko"] .aurora.a2{animation:nebula2 40s ease-in-out infinite}
+  [data-theme="neko"] .aurora.a3{animation:nebula3 46s ease-in-out infinite}
+  [data-theme="neko"] .pcard{border-radius:16px}
+  [data-theme="neko"] .pcard:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(94,72,50,.14)}
+  [data-theme="neko"] .pname{text-transform:none;letter-spacing:.3px;font-weight:600;font-size:16px}
+  [data-theme="neko"] .pill{border:none;text-shadow:none;padding:4px 11px}
+  [data-theme="neko"] .pill.active{background:rgba(95,174,110,.16)}
+  [data-theme="neko"] .pill.stalled{background:rgba(224,122,79,.18)}
+  [data-theme="neko"] .pill.done{background:rgba(154,127,201,.16)}
+  [data-theme="neko"] .pill.frozen{background:rgba(163,154,141,.20)}
+  [data-theme="neko"] .summary{border-radius:18px}
+  [data-theme="neko"] .panel{border-radius:16px}
+  [data-theme="neko"] .btn{border-radius:12px}
+  [data-theme="neko"] .sec-title::before{content:"\1F43E "}
+  [data-theme="neko"] .gate .big{filter:none}
+  [data-theme="neko"] .meteor{width:5px;height:5px;border-radius:50%;background:rgba(255,205,140,.65);
+    box-shadow:0 0 6px rgba(255,190,110,.5);filter:blur(.5px);animation-name:moteFall}
+  @keyframes moteFall{
+    0%  {transform:translate(0,0);opacity:0}
+    12% {opacity:.7}
+    55% {transform:translate(-2vw,58vh)}
+    100%{transform:translate(1vw,114vh);opacity:0}
+  }
+
+  /* the cat itself (shown only in neko theme; poses driven by JS) */
+  [data-theme="neko"] .neko{display:block}
+  .neko{position:fixed;z-index:50;width:92px;height:64px;left:24px;bottom:0;pointer-events:none;transition:left linear}
+  .nk-body{position:absolute;left:4px;bottom:8px;width:60px;height:32px;background:#332e29;border-radius:50% 46% 44% 48%/64% 70% 38% 42%}
+  .nk-head{position:absolute;right:0;bottom:29px;width:34px;height:30px;background:#332e29;border-radius:48%}
+  .nk-ear{position:absolute;top:-9px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:15px solid #332e29}
+  .nk-ear.l{left:1px;transform:rotate(-16deg)}
+  .nk-ear.r{right:1px;transform:rotate(16deg)}
+  .nk-eye{position:absolute;top:11px;width:7px;height:8px;background:#f0a83c;border-radius:50%;animation:nkBlink 5.5s infinite}
+  .nk-eye.l{left:7px}
+  .nk-eye.r{right:7px}
+  .nk-tail{position:absolute;left:-14px;bottom:18px;width:30px;height:8px;background:#332e29;border-radius:8px;transform-origin:right center;animation:nkTail 3.4s ease-in-out infinite}
+  .nk-leg{position:absolute;bottom:0;width:9px;height:12px;background:#332e29;border-radius:4px 4px 5px 5px}
+  .nk-leg.l{left:14px}
+  .nk-leg.r{left:44px}
+  .nk-zzz{display:none;position:absolute;right:2px;top:-14px;font-family:var(--mono);font-size:12px;color:var(--faint)}
+  .nk-zzz span{position:absolute;right:0;bottom:0;opacity:0;animation:nkZ 3s ease-out infinite}
+  .nk-zzz span:nth-child(2){animation-delay:1s}
+  .nk-zzz span:nth-child(3){animation-delay:2s}
+  .neko.walking .nk-leg.l{animation:nkStep .5s ease-in-out infinite}
+  .neko.walking .nk-leg.r{animation:nkStep .5s ease-in-out -.25s infinite}
+  .neko.walking .nk-body{animation:nkBob .5s ease-in-out infinite}
+  .neko.walking .nk-head{animation:nkBob .5s ease-in-out -.12s infinite}
+  .neko.sitting .nk-body{left:24px;bottom:0;width:42px;height:42px;border-radius:48% 48% 42% 42%/58% 58% 42% 42%}
+  .neko.sitting .nk-head{right:8px;bottom:36px}
+  .neko.sitting .nk-leg{height:7px}
+  .neko.sitting .nk-leg.l{left:32px}
+  .neko.sitting .nk-leg.r{left:46px}
+  .neko.sitting .nk-tail{left:16px;bottom:0;transform:rotate(40deg);animation:nkTailSlow 5s ease-in-out infinite}
+  .neko.sleeping .nk-body{left:10px;bottom:0;width:58px;height:26px;border-radius:50%/60%}
+  .neko.sleeping .nk-head{right:12px;bottom:2px;width:28px;height:24px}
+  .neko.sleeping .nk-eye{animation:none;transform:scaleY(.1)}
+  .neko.sleeping .nk-leg{display:none}
+  .neko.sleeping .nk-tail{left:0;bottom:2px;transform:rotate(22deg);animation:none}
+  .neko.sleeping .nk-zzz{display:block}
+  @keyframes nkTail{0%,100%{transform:rotate(16deg)}50%{transform:rotate(-12deg)}}
+  @keyframes nkTailSlow{0%,100%{transform:rotate(40deg)}50%{transform:rotate(28deg)}}
+  @keyframes nkBlink{0%,91%,100%{transform:scaleY(1)}94%,96%{transform:scaleY(.08)}}
+  @keyframes nkStep{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @keyframes nkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  @keyframes nkZ{0%{opacity:0;transform:translate(0,0) scale(.8)}25%{opacity:.9}100%{opacity:0;transform:translate(10px,-20px) scale(1.3)}}
+
   /* honor reduced motion */
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -670,6 +759,17 @@
 <div class="scan" aria-hidden="true"></div>
 <div class="boot" aria-hidden="true"></div>
 
+<div id="neko" class="neko" aria-hidden="true">
+  <div class="nk-tail"></div>
+  <div class="nk-body"></div>
+  <div class="nk-head">
+    <div class="nk-ear l"></div><div class="nk-ear r"></div>
+    <div class="nk-eye l"></div><div class="nk-eye r"></div>
+  </div>
+  <div class="nk-leg l"></div><div class="nk-leg r"></div>
+  <div class="nk-zzz"><span>z</span><span>z</span><span>z</span></div>
+</div>
+
 <div class="wrap">
   <header>
     <div class="brand">
@@ -688,6 +788,7 @@
         <button type="button" class="titem" data-t="zephyr">zephyr</button>
         <button type="button" class="titem" data-t="abyss">abyss</button>
         <button type="button" class="titem" data-t="daybreak">daybreak</button>
+        <button type="button" class="titem" data-t="neko">neko</button>
       </div>
     </div>
   </header>
@@ -870,6 +971,11 @@
         m.style.top = (5 + Math.random()*60) + "vh";
         m.style.left = "-20vw";
         dur = 2 + Math.random()*1.5;
+      } else if(t === "neko"){
+        // dust motes drifting down through the sunlight
+        m.style.left = (Math.random()*100) + "vw";
+        m.style.top = "-4vh";
+        dur = 10 + Math.random()*6;
       } else {
         // shooting stars from the top-left quadrant
         m.style.top = (Math.random()*40 - 5) + "vh";
@@ -886,7 +992,7 @@
   })();
 
   // ----- theme -----
-  var THEMES = ["cosmos", "summit", "ember", "editorial", "zephyr", "abyss", "daybreak"];
+  var THEMES = ["cosmos", "summit", "ember", "editorial", "zephyr", "abyss", "daybreak", "neko"];
   var stored = localStorage.getItem(THEME_KEY) || "";
   // migrate pre-theme-system / removed values
   if(stored === "dark") stored = "cosmos";
@@ -920,6 +1026,89 @@
       $("theme-menu").classList.add("hidden");
     };
   });
+
+  // ----- resident cat (neko theme): poses react to board state -----
+  (function nekoLife(){
+    var el = $("neko");
+    if(!el) return;
+    var motionOff = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function isNeko(){ return document.documentElement.getAttribute("data-theme") === "neko"; }
+    function setPose(p){
+      el.classList.remove("walking","sitting","sleeping");
+      if(p) el.classList.add(p);
+    }
+    function face(dir){ el.style.transform = dir < 0 ? "scaleX(-1)" : ""; }
+    function floorMode(){
+      el.style.position = "fixed";
+      el.style.top = "auto";
+      el.style.bottom = "0";
+    }
+    function staleCardEl(){
+      var f = document.querySelector(".pfoot.stale");
+      return f ? f.closest(".pcard") : null;
+    }
+    function activeCount(){
+      var n = 0;
+      currentProjects.forEach(function(p){ if(p.status === "active") n++; });
+      return n;
+    }
+    function sitOnCard(card){
+      // perch on the stale card's top edge — the gentlest possible nag
+      var r = card.getBoundingClientRect();
+      el.style.transitionDuration = "0s";
+      el.style.position = "absolute";
+      el.style.bottom = "auto";
+      el.style.top = (r.top + window.scrollY - 58) + "px";
+      el.style.left = (r.left + window.scrollX + r.width - 116) + "px";
+      face(1);
+      setPose("sitting");
+    }
+    var forced = (location.search.match(/[?&]nekopose=([a-z]+)/) || [])[1] || "";
+    function tick(){
+      if(!isNeko()){ setTimeout(tick, 1600); return; }
+      if(forced){
+        floorMode();
+        el.style.left = "120px";
+        setPose(forced === "walk" ? "walking" : (forced === "sleep" ? "sleeping" : "sitting"));
+        return;
+      }
+      var sc = staleCardEl();
+      if(sc){ sitOnCard(sc); setTimeout(tick, 4000); return; }
+      var act = activeCount();
+      if(act === 0){
+        floorMode(); el.style.transitionDuration = "0s"; el.style.left = "28px"; face(1);
+        setPose("sleeping");
+        setTimeout(tick, 9000);
+        return;
+      }
+      // awake: wander along the bottom edge; more active projects, more pacing
+      floorMode();
+      var walkChance = act >= 4 ? 0.7 : 0.45;
+      if(Math.random() < walkChance){
+        var cur = parseFloat(el.style.left) || 24;
+        var target = 16 + Math.random() * Math.max(60, window.innerWidth - 140);
+        var dist = Math.abs(target - cur);
+        if(dist < 40){ setPose("sitting"); setTimeout(tick, 2500); return; }
+        face(target > cur ? 1 : -1);
+        setPose("walking");
+        var dur = dist / 45;
+        el.style.transitionDuration = dur + "s";
+        el.style.left = target + "px";
+        setTimeout(function(){
+          setPose("sitting");
+          setTimeout(tick, 2000 + Math.random()*5000);
+        }, dur * 1000 + 60);
+      } else {
+        setPose("sitting");
+        setTimeout(tick, 3000 + Math.random()*6000);
+      }
+    }
+    if(motionOff){
+      setPose("sitting");
+      return;
+    }
+    setTimeout(tick, 1200);
+  })();
 
   // ----- token -----
   function getToken(){ return localStorage.getItem(TOKEN_KEY) || ""; }
