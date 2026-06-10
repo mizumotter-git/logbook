@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%9A%80</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Roboto+Slab:wght@400;500;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Roboto+Slab:wght@400;500;700&family=Quicksand:wght@500;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     /* ----- dark (default): deep space ----- */
@@ -396,8 +396,10 @@
   .ticker{display:none}
   /* mountain silhouette (summit theme only) */
   .ridge{display:none}
-  /* resident cat (neko theme only) */
+  /* resident cat (cat theme only) */
   .neko{display:none}
+  /* resident monkey (monkey theme only) */
+  .monkey{display:none}
 
   /* ===== theme: abyss — deep-sea bioluminescence ===== */
   :root[data-theme="abyss"]{
@@ -757,6 +759,216 @@
   @keyframes nkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
   @keyframes nkZ{0%{opacity:0;transform:translate(0,0) scale(.8)}25%{opacity:.9}100%{opacity:0;transform:translate(10px,-20px) scale(1.3)}}
 
+  /* ===== theme: monkey — jungle morning with a resident monkey ===== */
+  :root[data-theme="monkey"]{
+    --bg:#eef5e6; --bg-2:#e1eed1; --bg-soft:rgba(252,255,246,.70);
+    --card:#fdfff8; --card-hi:#ffffff;
+    --line:rgba(64,88,44,.18); --line-strong:rgba(64,88,44,.38); --line-soft:rgba(64,88,44,.10);
+    --text:#2c3a24; --muted:#5f7252; --faint:#8da07c;
+    --neon-cyan:#3f9e4d; --neon-magenta:#e0852e; --neon-violet:#8a64c9; --neon-blue:#3f87b8;
+    --st-active:#3f9e4d; --st-stalled:#e0852e; --st-done:#8a64c9; --st-frozen:#97a18a;
+    --btn-text:#fff;
+    --glow-cyan:0 3px 14px rgba(63,158,77,.28);
+    --glow-magenta:0 3px 14px rgba(224,133,46,.28);
+    --glow-violet:0 3px 14px rgba(138,100,201,.28);
+    --glow-soft:0 8px 24px rgba(64,88,44,.09), inset 0 0 0 1px rgba(255,255,255,.6);
+    --aurora-1:rgba(168,214,120,.50); --aurora-2:rgba(242,216,110,.40); --aurora-3:rgba(218,240,196,.60);
+    --display:'Baloo 2',var(--sans);
+  }
+  [data-theme="monkey"] body{background:linear-gradient(180deg,var(--bg),var(--bg-2));background-attachment:fixed}
+  [data-theme="monkey"] .stars,[data-theme="monkey"] .grid,[data-theme="monkey"] .scan,
+  [data-theme="monkey"] .heartbeat,[data-theme="monkey"] .pulse-ring,[data-theme="monkey"] .boot{display:none}
+  [data-theme="monkey"] .aurora{mix-blend-mode:normal;filter:blur(100px) saturate(1)}
+  [data-theme="monkey"] .aurora.a1{animation:nebula1 34s ease-in-out infinite}
+  [data-theme="monkey"] .aurora.a2{animation:nebula2 40s ease-in-out infinite}
+  [data-theme="monkey"] .aurora.a3{animation:nebula3 46s ease-in-out infinite}
+  [data-theme="monkey"] .pcard{border-radius:16px}
+  [data-theme="monkey"] .pcard:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(64,88,44,.14)}
+  [data-theme="monkey"] .pname{text-transform:none;letter-spacing:.3px;font-weight:600;font-size:16px}
+  [data-theme="monkey"] .pill{border:none;text-shadow:none;padding:4px 11px}
+  [data-theme="monkey"] .pill.active{background:rgba(63,158,77,.15)}
+  [data-theme="monkey"] .pill.stalled{background:rgba(224,133,46,.17)}
+  [data-theme="monkey"] .pill.done{background:rgba(138,100,201,.15)}
+  [data-theme="monkey"] .pill.frozen{background:rgba(151,161,138,.20)}
+  [data-theme="monkey"] .summary{border-radius:18px}
+  [data-theme="monkey"] .panel{border-radius:16px}
+  [data-theme="monkey"] .btn{border-radius:12px}
+  [data-theme="monkey"] .sec-title::before{content:"\1F34C "}
+  [data-theme="monkey"] .gate .big{filter:none}
+  [data-theme="monkey"] .meteor{width:10px;height:7px;border-radius:80% 12% 80% 12%;
+    background:#7fb069;box-shadow:none;filter:none;animation-name:leafFall}
+  [data-theme="monkey"] .meteor.v{background:#5d9c59}
+  [data-theme="monkey"] .meteor.m{background:#e3c84e}
+  @keyframes leafFall{
+    0%  {transform:translate(0,0) rotate(0);opacity:0}
+    10% {opacity:.85}
+    50% {transform:translate(-4vw,55vh) rotate(160deg)}
+    100%{transform:translate(2vw,112vh) rotate(320deg);opacity:0}
+  }
+
+  /* the monkey itself (poses driven by JS) — cute illustrated build */
+  [data-theme="monkey"] .monkey{display:block}
+  .monkey{position:fixed;z-index:50;width:100px;height:88px;left:30px;bottom:4px;pointer-events:none;
+    transform-origin:50% 6px;transition:left .55s cubic-bezier(.2,.7,.2,1), top .55s cubic-bezier(.2,.7,.2,1), bottom .55s cubic-bezier(.2,.7,.2,1)}
+  .monkey.walking{transition:left linear, bottom .35s ease}
+  .mk-body{position:absolute;left:31px;bottom:12px;width:38px;height:40px;background:#8a6749;
+    border-radius:46% 54% 44% 56%/40% 40% 62% 60%}
+  .mk-belly{position:absolute;left:39px;bottom:15px;width:22px;height:24px;background:#ead4b0;border-radius:50%/56%}
+  .mk-head{position:absolute;left:30px;bottom:44px;width:36px;height:32px;background:#8a6749;border-radius:50%;
+    transition:transform .35s ease, bottom .3s ease, left .3s ease, width .3s ease, height .3s ease}
+  /* large cream face patch (two cheek lobes) */
+  .mk-face{position:absolute;left:6px;top:10px;width:24px;height:19px;background:#ead4b0;
+    border-radius:46% 46% 48% 48%/40% 40% 60% 60%}
+  .mk-ear{position:absolute;top:4px;width:13px;height:13px;background:#8a6749;border-radius:50%}
+  .mk-ear.l{left:-5px}
+  .mk-ear.r{right:-5px}
+  .mk-ear::after{content:"";position:absolute;left:3.5px;top:3.5px;width:6px;height:6px;background:#e6b89a;border-radius:50%}
+  .mk-cheek{position:absolute;top:17px;width:8px;height:6px;background:rgba(232,138,148,.55);border-radius:50%}
+  .mk-cheek.l{left:4px}
+  .mk-cheek.r{right:4px}
+  .mk-eye{position:absolute;top:11px;width:5px;height:6px;background:#3a2a1e;border-radius:50%;animation:nkBlink 6s infinite}
+  .mk-eye.l{left:11px}
+  .mk-eye.r{right:11px}
+  .mk-nose{position:absolute;top:17px;left:50%;width:0;height:0;margin-left:-2.5px;
+    border-left:2.5px solid transparent;border-right:2.5px solid transparent;border-top:3px solid #5a3f2c}
+  .mk-mouth{position:absolute;top:20px;left:50%;width:9px;height:5px;margin-left:-4.5px;
+    border-bottom:1.5px solid #5a3f2c;border-radius:0 0 70% 70%;transition:all .25s ease}
+  .mk-arm{position:absolute;width:8px;height:42px;background:#8a6749;border-radius:5px;
+    transform-origin:50% 12%;transition:transform .35s ease, left .3s ease, bottom .3s ease, height .3s ease}
+  .mk-arm::after{content:"";position:absolute;left:-1px;bottom:-3px;width:10px;height:9px;background:#ead4b0;border-radius:50%}
+  .mk-arm.l{left:22px;bottom:12px}
+  .mk-arm.r{left:68px;bottom:12px}
+  .mk-leg{position:absolute;bottom:0;width:10px;height:15px;background:#8a6749;border-radius:5px}
+  .mk-leg::after{content:"";position:absolute;left:-1px;bottom:-2px;width:12px;height:8px;background:#ead4b0;border-radius:50% 50% 46% 46%}
+  .mk-leg.l{left:36px}
+  .mk-leg.r{left:52px}
+  .mk-tail{position:absolute;left:0;bottom:8px;width:26px;height:32px;border:5px solid #8a6749;
+    border-right-color:transparent;border-bottom-color:transparent;border-radius:50%;
+    transform:rotate(34deg);transform-origin:right 80%;animation:mkTailSway 3.8s ease-in-out infinite}
+  .mk-item{display:none;position:absolute;left:52px;bottom:48px;width:16px;height:6px;background:#f2c84b;
+    border-radius:60% 60% 50% 50%/80% 80% 40% 40%;transform:rotate(-34deg);
+    box-shadow:inset 0 -1.5px 0 rgba(160,120,30,.35)}
+
+  /* walking — knuckle walk: long front arms prop the upper body up, head leads forward */
+  .monkey.walking .mk-body{left:18px;bottom:12px;width:50px;height:28px;border-radius:54% 46% 50% 50%/58% 52% 48% 46%;
+    transform:rotate(-9deg);animation:mkBodyTrot .52s ease-in-out infinite}
+  .monkey.walking .mk-belly{display:none}
+  .monkey.walking .mk-head{left:48px;bottom:20px;width:33px;height:30px;transform:rotate(5deg);
+    animation:mkHeadTrot .52s ease-in-out -.08s infinite}
+  .monkey.walking .mk-arm{height:33px;bottom:2px;transform-origin:50% 8%}
+  .monkey.walking .mk-arm::after{bottom:-2px}
+  .monkey.walking .mk-arm.l{left:47px;animation:mkFrontStep .52s ease-in-out infinite}
+  .monkey.walking .mk-arm.r{left:60px;animation:mkFrontStep .52s ease-in-out -.26s infinite}
+  .monkey.walking .mk-leg{height:17px;transform-origin:50% 8%;animation:mkBackStep .52s ease-in-out infinite}
+  .monkey.walking .mk-leg.l{left:22px;animation-delay:-.26s}
+  .monkey.walking .mk-leg.r{left:34px}
+  .monkey.walking .mk-tail{left:2px;bottom:19px;transform:rotate(56deg);animation:mkTailWalk .52s ease-in-out infinite}
+
+  .monkey.sitting .mk-body{left:29px;bottom:0;width:42px;height:34px;border-radius:48% 52% 46% 54%/44% 44% 58% 56%}
+  .monkey.sitting .mk-belly{left:38px;bottom:3px;width:22px;height:19px}
+  .monkey.sitting .mk-head{left:30px;bottom:31px}
+  .monkey.sitting .mk-leg{height:8px}
+  .monkey.sitting .mk-leg.l{left:38px}
+  .monkey.sitting .mk-leg.r{left:52px}
+  .monkey.sitting .mk-arm{height:29px;bottom:2px}
+  .monkey.sitting .mk-arm.l{left:23px;transform:rotate(-8deg)}
+  .monkey.sitting .mk-arm.r{left:69px;transform:rotate(8deg)}
+  .monkey.sitting .mk-tail{left:-2px;bottom:0;transform:rotate(64deg)}
+
+  .monkey.sleeping .mk-body{left:14px;bottom:0;width:54px;height:22px;border-radius:50%/62%}
+  .monkey.sleeping .mk-belly{display:none}
+  .monkey.sleeping .mk-head{left:40px;bottom:6px;width:32px;height:28px}
+  .monkey.sleeping .mk-eye{animation:none;height:2px;top:13px;border-radius:2px}
+  .monkey.sleeping .mk-cheek{top:16px}
+  .monkey.sleeping .mk-leg,.monkey.sleeping .mk-arm{display:none}
+  .monkey.sleeping .mk-tail{left:-8px;bottom:0;transform:rotate(10deg);animation:none}
+  .monkey.sleeping .nk-zzz{display:block;right:6px;top:-6px}
+
+  .monkey.eating .mk-body{left:29px;bottom:0;width:42px;height:34px;border-radius:48% 52% 46% 54%/44% 44% 58% 56%}
+  .monkey.eating .mk-belly{left:38px;bottom:3px;width:22px;height:19px}
+  .monkey.eating .mk-head{left:30px;bottom:31px;transform:rotate(-3deg)}
+  .monkey.eating .mk-leg{height:8px}
+  .monkey.eating .mk-leg.l{left:38px}
+  .monkey.eating .mk-leg.r{left:52px}
+  .monkey.eating .mk-arm.l{left:25px;height:28px;bottom:4px;transform:rotate(-10deg)}
+  .monkey.eating .mk-arm.r{left:54px;bottom:26px;height:28px;transform-origin:50% 86%;
+    transform:rotate(-118deg);animation:mkSnackHand 1.15s ease-in-out infinite}
+  .monkey.eating .mk-arm.r::after{background:#ead4b0;box-shadow:0 0 0 2px rgba(242,200,75,.18)}
+  .monkey.eating .mk-item{display:block;left:63px;bottom:50px;width:18px;height:7px;animation:mkSnack 1.15s ease-in-out infinite}
+  .monkey.eating .mk-mouth{width:7px;height:6px;margin-left:-3.5px;border:none;background:#5a3f2c;
+    border-radius:50%;animation:mkMunch .6s ease-in-out infinite}
+
+  /* hanging — both arms straight up gripping the branch overhead */
+  .monkey.hanging{animation:mkSwing 3.4s ease-in-out infinite;transform-origin:50% 1px}
+  .monkey.hanging .mk-body{left:33px;bottom:8px;width:34px;height:36px;animation:mkHangBody 3.4s ease-in-out infinite}
+  .monkey.hanging .mk-belly{left:40px;bottom:11px;width:20px;height:21px;animation:mkHangBody 3.4s ease-in-out infinite}
+  .monkey.hanging .mk-head{left:33px;bottom:43px;animation:mkHangHead 3.4s ease-in-out infinite}
+  /* arms run straight up from the shoulders, flush with the body, hands gripping overhead */
+  .monkey.hanging .mk-arm{height:43px;bottom:44px;transform:none;transform-origin:50% 100%;transition:none;
+    animation:mkGrip .95s ease-in-out infinite}
+  .monkey.hanging .mk-arm::after{top:-4px;bottom:auto;width:11px;height:10px}
+  .monkey.hanging .mk-arm.l{left:33px;animation-delay:-.18s}
+  .monkey.hanging .mk-arm.r{left:59px;animation-delay:-.64s}
+  .monkey.hanging .mk-leg{bottom:-3px;transform-origin:50% 0;animation:mkDangle 3.4s ease-in-out infinite}
+  .monkey.hanging .mk-leg.l{left:38px}
+  .monkey.hanging .mk-leg.r{left:52px;animation-delay:-1.1s}
+  .monkey.hanging .mk-tail{left:3px;bottom:4px;transform:rotate(78deg);animation:mkTailHang 3.4s ease-in-out infinite}
+
+  .monkey.scratchhead .mk-arm.r{left:54px;bottom:46px;height:18px;transform-origin:50% 90%;animation:mkScr .35s linear infinite}
+  .monkey.scratchhead .mk-head{transform:rotate(6deg)}
+  .monkey.scratchbutt .mk-arm.l{left:14px;bottom:8px;height:18px;transform-origin:50% 90%;animation:mkScrB .35s linear infinite}
+  .monkey.scratchbutt .mk-body,.monkey.scratchbutt .mk-belly{animation:mkWig .35s linear infinite}
+  .monkey.hopping{animation:mkHop .55s ease-in-out 4}
+  .monkey.looking .mk-head{animation:nkLook 2.6s ease-in-out}
+  .monkey.looking .mk-ear.l{animation:nkTwitch .35s ease-in-out 2}
+  @keyframes mkTailSway{0%,100%{transform:rotate(34deg)}50%{transform:rotate(20deg)}}
+  @keyframes mkBodyTrot{0%,100%{transform:rotate(-9deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-2px)}}
+  @keyframes mkHeadTrot{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(2deg) translateY(-2px)}}
+  @keyframes mkFrontStep{0%,100%{transform:rotate(18deg) translateY(0)}50%{transform:rotate(-18deg) translateY(-2px)}}
+  @keyframes mkBackStep{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(12deg) translateY(-4px)}}
+  @keyframes mkTailWalk{0%,100%{transform:rotate(56deg)}50%{transform:rotate(43deg)}}
+  @keyframes mkSnack{0%,100%{transform:rotate(-34deg) translate(0,0)}42%{transform:rotate(-22deg) translate(-7px,3px)}65%{transform:rotate(-28deg) translate(-4px,1px)}}
+  @keyframes mkSnackHand{0%,100%{transform:rotate(-118deg)}42%{transform:rotate(-138deg)}65%{transform:rotate(-128deg)}}
+  @keyframes mkSwing{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(2px)}}
+  @keyframes mkHangBody{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(2px) rotate(1deg)}}
+  @keyframes mkHangHead{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+  @keyframes mkGrip{0%,100%{transform:translateY(0)}50%{transform:translateY(1.5px)}}
+  @keyframes mkDangle{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  @keyframes mkTailHang{0%,100%{transform:rotate(78deg)}50%{transform:rotate(96deg)}}
+  @keyframes mkMunch{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+  @keyframes mkScr{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-12deg)}}
+  @keyframes mkScrB{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(12deg)}}
+  @keyframes mkWig{0%,100%{transform:rotate(0)}50%{transform:rotate(1.6deg)}}
+  @keyframes mkHop{0%,100%{transform:translateY(0)}35%{transform:translateY(-16px)}60%{transform:translateY(0)}}
+
+  /* a banana tree the monkey can swing from (monkey theme, wide screens only) */
+  .mk-tree{display:none}
+  [data-theme="monkey"] .mk-tree{display:block;position:fixed;bottom:0;width:150px;height:226px;z-index:48;pointer-events:none}
+  [data-theme="monkey"] .mk-tree.right{right:20px}
+  [data-theme="monkey"] .mk-tree.left{left:20px;transform:scaleX(-1)}
+  .tr-trunk{position:absolute;left:88px;bottom:0;width:16px;height:174px;
+    background:linear-gradient(90deg,#7d5f3e,#a4845a);border-radius:7px 7px 0 0;transform:rotate(3deg);transform-origin:bottom center}
+  .tr-trunk::before,.tr-trunk::after{content:"";position:absolute;left:0;width:16px;height:0;border-top:2px solid rgba(90,63,44,.35)}
+  .tr-trunk::before{top:54px;transform:rotate(8deg)}
+  .tr-trunk::after{top:104px;transform:rotate(8deg)}
+  .tr-branch{position:absolute;left:6px;bottom:152px;width:100px;height:12px;
+    background:linear-gradient(90deg,#7d5f3e,#9a7b52);border-radius:7px;transform:rotate(-7deg);transform-origin:right center}
+  .tr-frond{position:absolute;left:88px;bottom:160px;width:82px;height:26px;transform-origin:left center;
+    border-radius:50% 60% 55% 50%/55% 60% 50% 55%}
+  .tr-frond.f1{transform:rotate(-26deg);background:#5da33c}
+  .tr-frond.f2{transform:rotate(-62deg);background:#6fb04a}
+  .tr-frond.f3{transform:rotate(-92deg);background:#56993a}
+  .tr-frond.f4{transform:rotate(-122deg);background:#6fb04a}
+  .tr-frond.f5{transform:rotate(-156deg);background:#5da33c}
+  .tr-bunch{position:absolute;left:80px;bottom:130px;width:28px;height:24px}
+  .tr-bunch .bn{position:absolute;top:0;width:7px;height:21px;background:#f2c84b;
+    border-radius:46% 46% 50% 50%/30% 30% 80% 80%;transform-origin:top center;
+    box-shadow:inset -1.5px 0 0 rgba(150,110,25,.32)}
+  .tr-bunch .bn:nth-child(1){left:1px;transform:rotate(16deg)}
+  .tr-bunch .bn:nth-child(2){left:9px;transform:rotate(1deg)}
+  .tr-bunch .bn:nth-child(3){left:17px;transform:rotate(-14deg)}
+  @media (max-width:1100px){[data-theme="monkey"] .mk-tree{display:none}}
+
   /* honor reduced motion */
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -805,6 +1017,38 @@
 </div>
 <div class="nk-bowl" aria-hidden="true"></div>
 
+<div id="monkey" class="monkey" aria-hidden="true">
+  <div class="mk-tail"></div>
+  <div class="mk-body"></div>
+  <div class="mk-belly"></div>
+  <div class="mk-arm l"></div><div class="mk-arm r"></div>
+  <div class="mk-leg l"></div><div class="mk-leg r"></div>
+  <div class="mk-head">
+    <div class="mk-ear l"></div><div class="mk-ear r"></div>
+    <div class="mk-face"></div>
+    <div class="mk-cheek l"></div><div class="mk-cheek r"></div>
+    <div class="mk-eye l"></div><div class="mk-eye r"></div>
+    <div class="mk-nose"></div>
+    <div class="mk-mouth"></div>
+  </div>
+  <div class="mk-item"></div>
+  <div class="nk-zzz"><span>z</span><span>z</span><span>z</span></div>
+</div>
+<div class="mk-tree right" aria-hidden="true">
+  <div class="tr-trunk"></div>
+  <div class="tr-branch"></div>
+  <div class="tr-frond f1"></div><div class="tr-frond f2"></div><div class="tr-frond f3"></div>
+  <div class="tr-frond f4"></div><div class="tr-frond f5"></div>
+  <div class="tr-bunch"><div class="bn"></div><div class="bn"></div><div class="bn"></div></div>
+</div>
+<div class="mk-tree left" aria-hidden="true">
+  <div class="tr-trunk"></div>
+  <div class="tr-branch"></div>
+  <div class="tr-frond f1"></div><div class="tr-frond f2"></div><div class="tr-frond f3"></div>
+  <div class="tr-frond f4"></div><div class="tr-frond f5"></div>
+  <div class="tr-bunch"><div class="bn"></div><div class="bn"></div><div class="bn"></div></div>
+</div>
+
 <div class="wrap">
   <header>
     <div class="brand">
@@ -824,6 +1068,7 @@
         <button type="button" class="titem" data-t="abyss">abyss</button>
         <button type="button" class="titem" data-t="daybreak">daybreak</button>
         <button type="button" class="titem" data-t="cat">cat</button>
+        <button type="button" class="titem" data-t="monkey">monkey</button>
       </div>
     </div>
   </header>
@@ -1011,6 +1256,11 @@
         m.style.left = (Math.random()*100) + "vw";
         m.style.top = "-4vh";
         dur = 10 + Math.random()*6;
+      } else if(t === "monkey"){
+        // leaves fluttering down from the canopy
+        m.style.left = (Math.random()*100) + "vw";
+        m.style.top = "-4vh";
+        dur = 7 + Math.random()*5;
       } else {
         // shooting stars from the top-left quadrant
         m.style.top = (Math.random()*40 - 5) + "vh";
@@ -1027,7 +1277,7 @@
   })();
 
   // ----- theme -----
-  var THEMES = ["cosmos", "summit", "ember", "editorial", "zephyr", "abyss", "daybreak", "cat"];
+  var THEMES = ["cosmos", "summit", "ember", "editorial", "zephyr", "abyss", "daybreak", "cat", "monkey"];
   var stored = localStorage.getItem(THEME_KEY) || "";
   // migrate pre-theme-system / removed / renamed values
   if(stored === "dark") stored = "cosmos";
@@ -1271,6 +1521,231 @@
       return;
     }
     setTimeout(tick, 1200);
+  })();
+
+  // ----- resident monkey (monkey theme): random jungle life -----
+  (function monkeyLife(){
+    var el = $("monkey");
+    if(!el) return;
+    var motionOff = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function isMonkey(){ return document.documentElement.getAttribute("data-theme") === "monkey"; }
+    function setPose(p){
+      el.classList.remove("walking","sitting","sleeping","eating","hanging","scratchhead","scratchbutt","hopping","looking");
+      if(p) el.classList.add(p);
+    }
+    function face(dir){ el.style.transform = dir < 0 ? "scaleX(-1)" : ""; }
+    function floorMode(){
+      var wasAirborne = el.style.position === "absolute" || (el.style.top && el.style.top !== "auto");
+      if(wasAirborne){
+        var r = el.getBoundingClientRect();
+        el.style.position = "fixed";
+        el.style.left = Math.max(8, Math.min(window.innerWidth - 108, r.left)) + "px";
+        el.style.top = Math.max(8, Math.min(window.innerHeight - 92, r.top)) + "px";
+        el.style.bottom = "auto";
+        el.style.transitionDuration = ".55s";
+        // Force a layout read so the drop starts from the hanging position.
+        el.offsetHeight;
+        el.style.top = (window.innerHeight - 92) + "px";
+        setTimeout(function(){
+          if(el.style.position === "fixed"){
+            el.style.top = "auto";
+            el.style.bottom = "4px";
+          }
+        }, 580);
+        return;
+      }
+      el.style.position = "fixed";
+      el.style.top = "auto";
+      el.style.bottom = "4px";
+    }
+    function randomCardEl(){
+      var cards = document.querySelectorAll(".pcard");
+      if(!cards.length) return null;
+      return cards[Math.floor(Math.random() * cards.length)];
+    }
+    function hangOn(card){
+      // grab the card's bottom edge and dangle
+      var r = card.getBoundingClientRect();
+      el.style.position = "absolute";
+      el.style.bottom = "auto";
+      el.style.transitionDuration = ".55s";
+      el.style.top = (r.bottom + window.scrollY - 2) + "px"; // hands grip right at the card's bottom edge
+      el.style.left = (r.left + window.scrollX + 20 + Math.random() * Math.max(40, r.width - 150)) + "px";
+      face(1);
+      setPose("hanging");
+    }
+    function treeHangOn(){
+      var branches = Array.prototype.filter.call(
+        document.querySelectorAll(".tr-branch"),
+        function(b){ return b.offsetParent; } // skip trees hidden on narrow screens
+      );
+      if(!branches.length) return false;
+      var br = branches[Math.floor(Math.random() * branches.length)];
+      var r = br.getBoundingClientRect();
+      var center = window.innerWidth / 2;
+      var bc = r.left + r.width / 2;
+      // grip the branch end that points toward the middle of the screen (the free end)
+      var gripX = bc < center ? (r.right - r.width * 0.18) : (r.left + r.width * 0.18);
+      el.style.position = "fixed";
+      el.style.top = "auto";
+      el.style.transitionDuration = ".65s";
+      el.style.left = (gripX - 45) + "px";
+      el.style.bottom = (window.innerHeight - r.top - 86) + "px"; // hands reach the branch
+      face(1);
+      setPose("hanging");
+      return true;
+    }
+    function pickAction(){
+      var act = 0;
+      currentProjects.forEach(function(p){ if(p.status === "active") act++; });
+      var r = Math.random();
+      var wTree = 0.16;                         // swing from the banana tree
+      var wHang = 0.12;                         // or grip a card edge
+      var wEat = 0.10;
+      var wScrH = 0.07;
+      var wScrB = 0.07;
+      var wHop = 0.07;
+      var wLook = 0.06;
+      var wSleep = act === 0 ? 0.18 : 0.12;
+      var wSit = 0.09;
+      if(r < wTree) return "tree";
+      r -= wTree;
+      if(r < wHang) return "hang";
+      r -= wHang;
+      if(r < wEat) return "eat";
+      r -= wEat;
+      if(r < wScrH) return "scratchhead";
+      r -= wScrH;
+      if(r < wScrB) return "scratchbutt";
+      r -= wScrB;
+      if(r < wHop) return "hop";
+      r -= wHop;
+      if(r < wLook) return "look";
+      r -= wLook;
+      if(r < wSleep) return "sleep";
+      r -= wSleep;
+      if(r < wSit) return "sit";
+      return "walk";
+    }
+    var forced = (location.search.match(/[?&]monkeypose=([a-z]+)/) || [])[1] || "";
+    function tick(){
+      if(!isMonkey()){ setTimeout(tick, 1600); return; }
+      if(forced){
+        if(forced === "tree"){ if(treeHangOn()) return; }
+        if(forced === "hang"){
+          var fc = document.querySelector(".pcard");
+          if(fc){ hangOn(fc); return; }
+        }
+        floorMode();
+        el.style.left = "140px";
+        if(forced === "hop"){ setPose("hopping"); return; }
+        if(forced === "look"){ setPose("sitting"); el.classList.add("looking"); return; }
+        if(forced === "eat"){ setPose("eating"); return; }
+        if(forced === "walk"){ setPose("walking"); return; }
+        if(forced === "sleep"){ setPose("sleeping"); return; }
+        if(forced === "scratchhead" || forced === "scratchbutt"){ setPose(forced); return; }
+        setPose("sitting");
+        return;
+      }
+      var a = pickAction();
+      if(a === "tree"){
+        if(treeHangOn()){ setTimeout(tick, 11000 + Math.random()*9000); return; }
+        a = "hang";
+      }
+      if(a === "hang"){
+        var card = randomCardEl();
+        if(card){
+          hangOn(card);
+          setTimeout(tick, 10000 + Math.random()*8000); // dangle a good while, then drop
+          return;
+        }
+        a = "sit";
+      }
+      floorMode();
+      if(a === "eat"){
+        // banana appears in hand; monkeys keep snacks somewhere
+        el.style.transitionDuration = "0s";
+        setPose("eating");
+        setTimeout(tick, 6000 + Math.random()*4000);
+        return;
+      }
+      if(a === "scratchhead" || a === "scratchbutt"){
+        el.style.transitionDuration = "0s";
+        setPose(a);
+        setTimeout(tick, 3000 + Math.random()*2500);
+        return;
+      }
+      if(a === "hop"){
+        el.style.transitionDuration = "0s";
+        setPose("hopping");
+        setTimeout(tick, 2600 + Math.random()*1500);
+        return;
+      }
+      if(a === "look"){
+        el.style.transitionDuration = "0s";
+        setPose("sitting");
+        el.classList.add("looking");
+        setTimeout(function(){ el.classList.remove("looking"); }, 2700);
+        setTimeout(tick, 4200 + Math.random()*2500);
+        return;
+      }
+      if(a === "sleep"){
+        el.style.transitionDuration = "0s";
+        setPose("sleeping");
+        setTimeout(tick, 16000 + Math.random()*20000);
+        return;
+      }
+      if(a === "sit"){
+        el.style.transitionDuration = "0s";
+        setPose("sitting");
+        setTimeout(tick, 4000 + Math.random()*6000);
+        return;
+      }
+      // walk — quick trots, mostly mid-range so walking never dominates
+      var cur = parseFloat(el.style.left) || 30;
+      var W = window.innerWidth;
+      var target;
+      if(Math.random() < 0.4){
+        target = (cur > W / 2) ? 8 : Math.max(60, W - 112);
+      } else {
+        target = 16 + Math.random() * Math.max(60, W - 150);
+      }
+      var dist = Math.abs(target - cur);
+      if(dist < 60){ setPose("sitting"); setTimeout(tick, 3000); return; }
+      var walkTo = function(x, done){
+        var c = parseFloat(el.style.left) || 30;
+        var d = Math.abs(x - c);
+        face(x > c ? 1 : -1);
+        setPose("walking");
+        var dr = d / 70; // monkeys trot quicker than cats
+        el.style.transitionDuration = dr + "s";
+        el.style.left = x + "px";
+        setTimeout(done, dr * 1000 + 60);
+      };
+      if(dist > 380 && Math.random() < 0.5){
+        var mid = Math.round(cur + (target - cur) * (0.35 + Math.random()*0.3));
+        var pauseMs = 3200 + Math.random()*2200;
+        var t1 = Math.abs(mid - cur) / 70 * 1000 + 60;
+        var t2 = Math.abs(target - mid) / 70 * 1000 + 60;
+        walkTo(mid, function(){
+          el.style.transitionDuration = "0s";
+          setPose(Math.random() < 0.5 ? "scratchhead" : "scratchbutt");
+          setTimeout(function(){
+            walkTo(target, function(){ setPose("sitting"); });
+          }, pauseMs);
+        });
+        setTimeout(tick, t1 + pauseMs + t2 + 2500 + Math.random()*3500);
+        return;
+      }
+      walkTo(target, function(){ setPose("sitting"); });
+      setTimeout(tick, dist / 70 * 1000 + 2560 + Math.random()*4000);
+    }
+    if(motionOff){
+      setPose("sitting");
+      return;
+    }
+    setPose("sitting");
+    setTimeout(tick, 1400);
   })();
 
   // ----- token -----
