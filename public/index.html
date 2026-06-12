@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%2310182e'/><circle cx='32' cy='32' r='23' fill='none' stroke='%23e8f0ff' stroke-width='4'/><g transform='rotate(-38 32 32)'><polygon points='32,12 38.5,32 25.5,32' fill='%23ff5868'/><polygon points='32,52 38.5,32 25.5,32' fill='%23e8f0ff'/></g><circle cx='32' cy='32' r='4.5' fill='%23e8f0ff'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Roboto+Slab:wght@400;500;700&family=Quicksand:wght@500;600;700&family=Baloo+2:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Roboto+Slab:wght@400;500;700&family=Quicksand:wght@500;600;700&family=Baloo+2:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
   :root{
     /* ----- dark (default): deep space ----- */
@@ -588,108 +588,6 @@
   .brd-tray .er{right:10%;width:46px;height:15px;background:#f4f3ee;border:2px solid #2b2e33;border-radius:3px}
   @media (max-width:1100px){[data-theme="boardroom"] .brd-clock{display:none}}
 
-  /* ===== theme: ember — fire, embers rising from below ===== */
-  :root[data-theme="ember"]{
-    --bg:#120c08; --bg-2:#1c120c; --bg-soft:rgba(36,22,14,.55);
-    --card:rgba(40,24,15,.55); --card-hi:rgba(54,32,20,.72);
-    --line:rgba(255,150,80,.16); --line-strong:rgba(255,170,100,.34); --line-soft:rgba(255,150,80,.08);
-    --text:#f6e9dc; --muted:#c2a18a; --faint:#7d6452;
-    --neon-cyan:#ffa53d; --neon-magenta:#e8483a; --neon-violet:#ff7a2f; --neon-blue:#ffb96b;
-    --st-active:#ffa53d; --st-stalled:#e8483a; --st-done:#c9b298; --st-frozen:#6f6258;
-    --btn-text:#1c0f06;
-    --glow-cyan:0 0 14px rgba(255,165,61,.55), 0 0 36px rgba(255,165,61,.22);
-    --glow-magenta:0 0 14px rgba(232,72,58,.55), 0 0 36px rgba(232,72,58,.22);
-    --glow-violet:0 0 14px rgba(255,122,47,.55), 0 0 36px rgba(255,122,47,.22);
-    --glow-soft:0 0 28px rgba(255,150,80,.07), inset 0 0 0 1px rgba(255,150,80,.06);
-    --aurora-1:rgba(255,122,47,.16); --aurora-2:rgba(232,72,58,.13); --aurora-3:rgba(255,165,61,.14);
-    --display:'Bebas Neue',Impact,var(--sans);
-  }
-  [data-theme="ember"] body{background:radial-gradient(ellipse at 50% 110%, rgba(255,122,47,.12), transparent 60%),linear-gradient(180deg,var(--bg),var(--bg-2));background-attachment:fixed}
-  [data-theme="ember"] .grid,[data-theme="ember"] .pulse-ring{display:none}
-  [data-theme="ember"] .aurora{animation-duration:18s,2s}
-  [data-theme="ember"] .heartbeat{background:radial-gradient(40% 40% at 50% 50%, rgba(255,165,61,.08), transparent 70%);animation-duration:2s}
-  [data-theme="ember"] .brand .core{animation:flicker 1.9s steps(1) infinite}
-  /* fire: chamfered metal plates, stencil type, rising sparks */
-  [data-theme="ember"] .pcard{border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none;
-    background:linear-gradient(180deg, rgba(56,34,20,.92), rgba(32,19,11,.94));
-    border:1px solid rgba(255,150,80,.22);
-    clip-path:polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)}
-  [data-theme="ember"] .pcard:hover{transform:translateY(-2px);border-color:rgba(255,170,100,.5);
-    box-shadow:inset 0 -24px 36px -14px rgba(255,130,40,.35)}
-  [data-theme="ember"] .pcard::before{top:0;bottom:0;width:4px;border-radius:0}
-  [data-theme="ember"] .pname{font-size:20px;font-weight:400;letter-spacing:1.5px}
-  [data-theme="ember"] .sum b{font-family:var(--display);font-size:32px;font-weight:400;letter-spacing:1px}
-  [data-theme="ember"] .pill{border-radius:3px}
-  [data-theme="ember"] .summary,[data-theme="ember"] .panel{border-radius:0;backdrop-filter:none;
-    clip-path:polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)}
-  [data-theme="ember"] .icon-btn,[data-theme="ember"] .theme-menu,[data-theme="ember"] .btn,
-  [data-theme="ember"] input,[data-theme="ember"] select,[data-theme="ember"] textarea{border-radius:3px}
-  [data-theme="ember"] .btn{letter-spacing:3px;font-weight:400}
-  [data-theme="ember"] .meteor{width:3px;height:3px;border-radius:50%;background:#ffc06a;
-    box-shadow:0 0 8px rgba(255,150,60,.85);filter:none;animation-name:sparkRise}
-  [data-theme="ember"] .pill.done{text-shadow:none}
-  @keyframes flicker{0%,100%{filter:brightness(1)}11%{filter:brightness(1.55)}23%{filter:brightness(.85)}34%{filter:brightness(1.3)}49%{filter:brightness(1.05)}61%{filter:brightness(1.6)}72%{filter:brightness(.9)}86%{filter:brightness(1.28)}}
-  @keyframes sparkRise{
-    0%  {transform:translate(0,0) scale(1);opacity:0}
-    8%  {opacity:1}
-    40% {transform:translate(2.5vw,-46vh) scale(.85)}
-    70% {transform:translate(-1.5vw,-80vh) scale(.65);opacity:.8}
-    100%{transform:translate(1vw,-114vh) scale(.4);opacity:0}
-  }
-
-  /* ===== theme: zephyr — wind, bright air and gusts ===== */
-  :root[data-theme="zephyr"]{
-    --bg:#eef5f7; --bg-2:#e2edf2; --bg-soft:rgba(255,255,255,.60);
-    --card:rgba(255,255,255,.72); --card-hi:rgba(255,255,255,.88);
-    --line:rgba(46,106,128,.18); --line-strong:rgba(46,106,128,.36); --line-soft:rgba(46,106,128,.10);
-    --text:#1e3440; --muted:#577383; --faint:#8aa1ad;
-    --neon-cyan:#2f96c8; --neon-magenta:#d98a2b; --neon-violet:#3fae85; --neon-blue:#2f96c8;
-    --st-active:#2f9e6e; --st-stalled:#d98a2b; --st-done:#3a87c8; --st-frozen:#92a3ad;
-    --btn-text:#fff;
-    --glow-cyan:0 2px 14px rgba(47,150,200,.30);
-    --glow-magenta:0 2px 14px rgba(217,138,43,.30);
-    --glow-violet:0 2px 14px rgba(63,174,133,.30);
-    --glow-soft:0 10px 28px rgba(46,106,128,.08), inset 0 0 0 1px rgba(255,255,255,.50);
-    --aurora-1:rgba(140,200,235,.40); --aurora-2:rgba(150,215,185,.35); --aurora-3:rgba(255,255,255,.55);
-    --sans:'Outfit','Space Grotesk',system-ui,sans-serif;
-    --display:'Outfit',var(--sans);
-  }
-  [data-theme="zephyr"] body{background:linear-gradient(180deg,var(--bg),var(--bg-2));background-attachment:fixed}
-  [data-theme="zephyr"] .stars,[data-theme="zephyr"] .grid,[data-theme="zephyr"] .scan,
-  [data-theme="zephyr"] .heartbeat,[data-theme="zephyr"] .pulse-ring,[data-theme="zephyr"] .boot{display:none}
-  [data-theme="zephyr"] .aurora{mix-blend-mode:normal;filter:blur(100px) saturate(1)}
-  [data-theme="zephyr"] .aurora.a1{animation:nebula1 30s ease-in-out infinite}
-  [data-theme="zephyr"] .aurora.a2{animation:nebula2 36s ease-in-out infinite}
-  [data-theme="zephyr"] .aurora.a3{animation:nebula3 42s ease-in-out infinite}
-  /* wind: one airy horizontal row per project, pushed sideways by gusts */
-  [data-theme="zephyr"] .board{grid-template-columns:1fr;gap:10px}
-  [data-theme="zephyr"] .pcard{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;
-    border-radius:999px;padding:13px 24px;animation-name:driftIn}
-  [data-theme="zephyr"] .pcard::before{display:none}
-  [data-theme="zephyr"] .ptop{flex:0 0 auto;justify-content:flex-start;gap:12px}
-  [data-theme="zephyr"] .preview{flex:1 1 220px;min-width:0;margin:0}
-  [data-theme="zephyr"] .pfoot{flex:0 0 auto;margin:0 0 0 auto}
-  [data-theme="zephyr"] .pcard:hover{transform:translateX(10px);border-color:var(--line-strong);
-    box-shadow:0 10px 26px rgba(46,106,128,.12)}
-  [data-theme="zephyr"] .pcard.open{display:block;border-radius:26px;padding:20px 26px}
-  [data-theme="zephyr"] .pcard.open:hover{transform:none}
-  [data-theme="zephyr"] .pcard.open .ptop{margin-bottom:6px}
-  [data-theme="zephyr"] .pcard.open .pfoot{margin-top:14px}
-  [data-theme="zephyr"] .pname{text-transform:none;letter-spacing:.4px;font-weight:500;font-size:16px}
-  [data-theme="zephyr"] .pill{border:none;text-shadow:none;padding:4px 11px}
-  [data-theme="zephyr"] .pill.active{background:rgba(47,158,110,.14)}
-  [data-theme="zephyr"] .pill.stalled{background:rgba(217,138,43,.16)}
-  [data-theme="zephyr"] .pill.done{background:rgba(58,135,200,.14)}
-  [data-theme="zephyr"] .pill.frozen{background:rgba(146,163,173,.20)}
-  [data-theme="zephyr"] .summary{border-radius:999px;padding:16px 28px}
-  [data-theme="zephyr"] .meteor{height:2px;width:240px;filter:blur(.5px);animation-name:gust}
-  @keyframes gust{
-    0%  {transform:translate(0,0) rotate(4deg);opacity:0}
-    12% {opacity:.65}
-    100%{transform:translate(160vw,14vh) rotate(4deg);opacity:0}
-  }
-  @keyframes driftIn{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
-
   /* ===== theme: summit — mountains, still night air ===== */
   :root[data-theme="summit"]{
     --bg:#12171a; --bg-2:#192023; --bg-soft:rgba(24,32,35,.60);
@@ -1232,9 +1130,7 @@
       <div id="theme-menu" class="theme-menu hidden" role="menu">
         <button type="button" class="titem" data-t="cosmos">cosmos</button>
         <button type="button" class="titem" data-t="summit">summit</button>
-        <button type="button" class="titem" data-t="ember">ember</button>
         <button type="button" class="titem" data-t="editorial">editorial</button>
-        <button type="button" class="titem" data-t="zephyr">zephyr</button>
         <button type="button" class="titem" data-t="ocean">ocean</button>
         <button type="button" class="titem" data-t="boardroom">boardroom</button>
         <button type="button" class="titem" data-t="cat">cat</button>
@@ -1410,12 +1306,7 @@
       var m = document.createElement("div");
       m.className = "meteor " + colors[Math.floor(Math.random()*colors.length)];
       var dur, ttl;
-      if(t === "ember"){
-        // sparks rise from the bottom, anywhere across the screen
-        m.style.left = (Math.random()*100) + "vw";
-        m.style.top = "102vh";
-        dur = 3 + Math.random()*3;
-      } else if(t === "ocean"){
+      if(t === "ocean"){
         // sun glitter twinkling on the water (sparkles in place)
         m.style.left = (Math.random()*100) + "vw";
         m.style.top = (26 + Math.random()*64) + "vh";
@@ -1436,11 +1327,6 @@
         m.style.left = bx + "px";
         m.style.top = (10 + Math.random()*74) + "vh";
         dur = 2.4 + Math.random()*1.6;
-      } else if(t === "zephyr"){
-        // gusts blow in from the left edge
-        m.style.top = (5 + Math.random()*60) + "vh";
-        m.style.left = "-20vw";
-        dur = 2 + Math.random()*1.5;
       } else if(t === "cat"){
         // dust motes drifting down through the sunlight
         m.style.left = (Math.random()*100) + "vw";
@@ -1469,7 +1355,7 @@
   })();
 
   // ----- theme -----
-  var THEMES = ["cosmos", "summit", "ember", "editorial", "zephyr", "ocean", "boardroom", "cat", "monkey"];
+  var THEMES = ["cosmos", "summit", "editorial", "ocean", "boardroom", "cat", "monkey"];
   var stored = localStorage.getItem(THEME_KEY) || "";
   // migrate pre-theme-system / removed / renamed values
   if(stored === "dark") stored = "cosmos";
@@ -1478,6 +1364,8 @@
   if(stored === "daybreak") stored = "boardroom"; // daybreak was replaced by the meeting room
   if(stored === "neko") stored = "cat";           // neko theme was renamed
   if(stored === "abyss") stored = "ocean";        // abyss was replaced by the sunny sea
+  if(stored === "zephyr") stored = "ocean";       // zephyr retired; ocean is the airy one now
+  if(stored === "ember") stored = "cosmos";       // ember retired; back to the flagship dark
   var urlTheme = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1] || "";
   var theme = THEMES.indexOf(urlTheme) >= 0 ? urlTheme
             : (THEMES.indexOf(stored) >= 0 ? stored : "cosmos");
